@@ -10,11 +10,6 @@ from anytree import AnyNode, RenderTree
 from create_ast_graph import create_ast_graph_func
 import numpy as np
 
-# g, alltokens, x, g_edge = create_ast_graph_func("../input/codeclone_bcb/BCB/test_data/1.txt")  # 得到图、token、结点列表、边列表
-
-
-# print("g_edge:", g_edge)
-
 def louvain_detect(g, x):
     partition = community_louvain.best_partition(g)  # 社区检测
     pvq = list(set(partition.values()))
@@ -164,53 +159,6 @@ def get_token_total_weight(x, final_centrality_result):
 
 
 # word2Vec嵌入与权重相乘
-
-from collections import defaultdict
-import numpy as np
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from word2vec import Word2Vec
-
-# def word2vec_embedding(token_weight_dict):
-#     tokens = list(token_weight_dict.keys())
-
-#     # 建立一个字典，用于将token映射为整数
-#     word_to_idx = defaultdict(lambda: len(word_to_idx))
-#     [word_to_idx[token] for token in tokens]
-
-#     # 获得字典大小，即嵌入矩阵的行数
-#     vocab_size = len(word_to_idx)
-
-#     # 将token列表转换为整数列表
-#     input_idxs = [word_to_idx[token] for token in tokens]
-
-#     # 初始化模型并定义优化器
-#     model = Word2Vec(vocab_size, embedding_dim=100)
-#     optimizer = optim.SGD(model.parameters(), lr=0.01)
-
-#     # 进行多次迭代训练，每次迭代随机选择一个词汇作为目标词汇
-#     for epoch in range(100):
-#         idx = np.random.randint(len(input_idxs))
-#         target_word = torch.tensor([input_idxs[idx]], dtype=torch.long)
-#         model.zero_grad()
-#         log_probs = model(target_word)
-#         loss = nn.functional.nll_loss(log_probs, target_word)
-#         loss.backward()
-#         optimizer.step()
-
-#     # 获取所有token的嵌入向量
-#     embeddings = model.embeddings.weight.data.numpy()
-
-#     # print(len(embeddings))
-
-#     weight_token_vector = []
-#     weights = list(token_weight_dict.values())
-#     for i in range(len(weights)):
-# #         weight_token_vector.append([j * weights[i] for j in embeddings[i]])
-#         weight_token_vector.append((np.array(embeddings[i])*weights[i]).tolist())
-
-#     return weight_token_vector
 
 from gensim.models import Word2Vec
 def word2vec_embedding(model, token_weight_dict):
